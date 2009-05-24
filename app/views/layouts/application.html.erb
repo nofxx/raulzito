@@ -2,8 +2,7 @@
   <head>
     <title>EnPassant</title>
     <%= stylesheet_link_tag "board" %>
-    <%= javascript_include_tag :defaults %>
-    <%= javascript_include_tag 'board_action' %>
+    <%= javascript_include_tag 'jquery' , 'application', 'board_action' %>
     <%= content_for :head %>
     <script>
       PeriodicalExecuter.prototype.registerCallback = function() {
