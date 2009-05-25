@@ -17,36 +17,36 @@ var current_allowed_moves = [];
         <script>    Droppables.add('<%= position %>', {hoverclass:'hoverActive', onDrop:handle_release_of_piece, accept: '<%= position %>' } ); </script>
 
         <% #indexing the helper-returned variable board doesnt work unless called through self.board
-	   p = self.board[position] 
-	   capture_class = case last_move && last_move.to_coord == position
-	     when true
-	        " just_moved#{last_move && last_move.notation.include?('x') ? '_w_capture' : '' }"
-	     else
+           p = self.board[position]
+           capture_class = case last_move && last_move.to_coord == position
+             when true
+                " just_moved#{last_move && last_move.notation.include?('x') ? '_w_capture' : '' }"
+             else
                 ''
-	   end
+           end
            if p                                       -%>
 
-	  <%= 
-	    image_tag image_source_of(p), 
-	      :id => p.board_id, 
-	      :alt => p.abbrev,
-	      :class => 'piece ' + p.allowed_moves(self.board).join(' ') + capture_class
-	  %>
+          <%=
+            image_tag image_source_of(p),
+              :id => p.board_id,
+              :alt => p.abbrev,
+              :class => 'piece ' + p.allowed_moves(self.board).join(' ') + capture_class
+          %>
 
-          <%= draggable_element( p.board_id, :revert => 'true', :snap => '[42,42]' ) if match.turn_of?(current_player) %> 
+          <%= draggable_element( p.board_id, :revert => 'true', :snap => '[42,42]' ) if match.turn_of?(current_user) %>
 
         <% else %>
           &nbsp;
         <% end %>
-      </td>	
+      </td>
     <% end %>
     </tr>
-    
+
     <% if rank==ranks[7..8] %>
       <tr>
         <td class="rank file">&nbsp;</td>
         <% files.each_char do |file| -%>
-          <td class="label file"><%= file %></td>	
+          <td class="label file"><%= file %></td>
         <% end %>
       </tr>
     <% end %>

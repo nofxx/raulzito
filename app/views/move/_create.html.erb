@@ -9,14 +9,14 @@
     <input type="button" value="Cancel" onclick="document.location.reload()"/>
 <% end %>
 
-<%= link_to "Resign", url_for(:action => 'resign'), 
+<%= link_to "Resign", "/resign",
     :confirm => 'Are you truly ready to accept disgrace and sulk back to the rock from under which you came ?' %>
 
 <%= link_to "PGN", match_url(@match, :format=>'pgn') %>
-    
+
 
 <%= javascript_tag("$('move_notation').focus()") %>
 
 <div id="move_error">
-	<%= flash[:move_error] %>
+        <%= flash[:move_error] %>
 </div>

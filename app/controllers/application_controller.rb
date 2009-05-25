@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-   helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user
   filter_parameter_logging :password, :password_confirmation
   # layout proc{ |c| c.request.xhr? ? false : "application" }
   before_filter :set_time_zone

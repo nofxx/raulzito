@@ -5,11 +5,11 @@ module MatchHelper
   end
 
   def viewed_from_side
-    @viewed_from_side ||= (current_player == match.player1) ? :white : :black
+    @viewed_from_side ||= (current_user == match.player1) ? :white : :black
   end
 
   def your_turn
-    @your_turn ||= match.turn_of?( current_player )
+    @your_turn ||= match.turn_of?( current_user )
   end
 
   def last_move
@@ -43,7 +43,7 @@ module MatchHelper
     extension = gif_file_exists?(piece, path) ? ".gif" : ".png"
     path + piece.img_name + extension
    end
-  
+
   def gif_file_exists?(piece, path)
     File.exists?( Rails.public_path + path + piece.img_name + ".gif" )
   end

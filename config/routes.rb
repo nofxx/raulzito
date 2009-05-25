@@ -31,11 +31,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :match , :except => [:delete], :shallow => true, :collection => { :create => :post } do |match|
     match.resources :moves, :controller => :move, :collection => { :create => :post }
     match.resource :chat
+#     match.resource :status
   end
 
   #sets controller courtesy of Sean
   map.resource :set, :member => {:change => :post}
   # map.resources :boards
+ #, :member => { :move => :get }
 
   map.resource :user_session
   map.logout   '/logout',   :controller => 'user_sessions', :action => 'destroy'
