@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   belongs_to :playing_as, :class_name => "Player", :foreign_key => "playing_as"
-   has_many  :gameplays
+  has_many  :gameplays
   has_many  :matches, :through => :gameplays
-
+  has_many  :friendships
+  has_many  :friends, :through => :friendships
   # has_attached_file :photo,
     #                 :styles => { :normal => '40x40#' },
     #                 :whiny_thumbnails => true,

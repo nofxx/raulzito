@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_filter :authorize
+  before_filter :require_user
   layout false
 
   def show

@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_filter :require_user
   # GET /friends
   # GET /friends.xml
   def index
