@@ -1,0 +1,67 @@
+.html.haml
+!!!
+%html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }/
+    %title= "Raulzito - { #{controller.controller_name.capitalize} }"
+    = stylesheet_link_tag 'application', 'icons', 'theme/style', 'theme/ui.theme', :media => 'screen, projection'
+    //= stylesheet_link_tag 'compiled/print.css', :media => 'print'
+    = javascript_include_tag 'jquery' , 'application', 'board_action'
+    = content_for :head
+  %body
+    #container
+      #header
+        %h1= image_tag "layout/logo.png"
+        #user-navigation
+          %ul
+            %li= link_to "Home", "/"
+            %li= link_to "Notícias", "/articles"
+            - if current_user
+              %li= link_to "Mensagens", "/inbox"
+              %li= link_to "Opções", "/"
+              %li= link_to "Sair", '/logout'
+            - else
+              %li= link_to "Signup", "/signup"
+              %li= link_to "Login", "/login"
+            %li= link_to "Jogos", "/games"
+          .clear
+      #user-drop-navigation
+        %input{:id => "search", :name => "search[query]", :size => "18", :type => "text" }
+        //= image_tag "icons/magnifier.png"
+        = submit_tag "Buscar", :class => :searchbutton
+      #main-navigation
+      #wrapper
+        .flash= display_flashes
+        #main= yield
+        #sidebar
+          = yield :sidebar
+          .block
+            %h3 Menu
+            %ul{:class => :navigation}
+              %li= link_to image_tag('../images/icons/table.png', :class=>'img')+' Lista', "/tracs"
+              %li= link_to image_tag('../images/icons/phone.png', :class=>'img')+'Aparelhos', "/devices"
+              %li= link_to image_tag('../images/icons/chip.png', :class=>'img')+' Chips', "/chips"
+        .clear
+    #footer
+      .block
+        .left
+          %p
+            = image_tag('../images/icons/fireho.png', :class=>'img')
+            %a{ :href => "http://fireho.com" } Fireho
+            todos os direitos reservados
+            |
+            LokCel BETA by
+            %a{ :href => "http://fireho.com" } fireho.com &copy; 2009
+
+
+
+
+    //<script>
+    //  PeriodicalExecuter.prototype.registerCallback = function() {
+    //    this.intervalID = setInterval(this.onTimerEvent.bind(this), this.frequency * 1000);
+    //  }
+    //
+    //  PeriodicalExecuter.prototype.stop = function() {
+    //    clearInterval(this.intervalID);
+    //  }
+    //</script>
