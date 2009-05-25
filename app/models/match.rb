@@ -11,6 +11,7 @@ class Match < ActiveRecord::Base
 
   named_scope :active,    :conditions => { :active => true }
   named_scope :completed, :conditions => { :active => false }
+  named_scope :started,   :conditions => { :active => nil }
 
   # fetches the first and second joins to player, which are white,black respectively
   has_many :gameplays do

@@ -23,35 +23,39 @@
             - else
               %li= link_to "Signup", "/signup"
               %li= link_to "Login", "/login"
-            %li= link_to "Jogos", "/games"
           .clear
-      #user-drop-navigation
-        %input{:id => "search", :name => "search[query]", :size => "18", :type => "text" }
-        //= image_tag "icons/magnifier.png"
-        = submit_tag "Buscar", :class => :searchbutton
-      #main-navigation
+        - if current_user
+          #user-drop-navigation
+            %input{:id => "search", :name => "search[query]", :size => "18", :type => "text" }
+            //= image_tag "icons/magnifier.png"
+            = submit_tag "Buscar", :class => :searchbutton
+          #main-navigation
+            %ul
+              %li{:class => "first active" }
+                = link_to 'Home', "/", :class =>"icon ihome"
+                %ul.submenu2
+                  %li
+                    %ul
+                      %li Opções do usuário:
+                      %li= link_to "Minha conta", "#"
+
+              %li= link_to 'Jogos', "/matches", :class =>"icon phone"
+              %li= link_to 'Stats', "/stats", :class =>"icon maps"
+              %li= link_to 'Amigos', "/pois", :class =>"icon icard_address"
+
       #wrapper
-        .flash= display_flashes
+        = display_flashes
         #main= yield
         #sidebar
           = yield :sidebar
-          .block
-            %h3 Menu
-            %ul{:class => :navigation}
-              %li= link_to image_tag('../images/icons/table.png', :class=>'img')+' Lista', "/tracs"
-              %li= link_to image_tag('../images/icons/phone.png', :class=>'img')+'Aparelhos', "/devices"
-              %li= link_to image_tag('../images/icons/chip.png', :class=>'img')+' Chips', "/chips"
         .clear
-    #footer
-      .block
-        .left
-          %p
-            = image_tag('../images/icons/fireho.png', :class=>'img')
-            %a{ :href => "http://fireho.com" } Fireho
-            todos os direitos reservados
-            |
-            LokCel BETA by
-            %a{ :href => "http://fireho.com" } fireho.com &copy; 2009
+      #footer
+        .block
+          Raulzito BETA
+          %a{ :href => "http://fireho.com" }= image_tag('../images/icons/fireho.png', :class=>'img')
+          %a{ :href => "http://fireho.com" } fireho.com &copy; 2009
+          |
+          todos os direitos reservados
 
 
 
