@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
     t.integer  "winner_id"
     t.integer  "loser_id"
     t.string   "name"
-    t.boolean  "active"
+    t.boolean  "active",                    :default => true, :null => false
     t.string   "start_pos",  :limit => 100
     t.string   "result",     :limit => 10
     t.datetime "created_at"

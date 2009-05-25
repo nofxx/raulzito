@@ -20,3 +20,38 @@ class User < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+# Schema version: 20090525081807
+#
+# Table name: users
+#
+#  id                  :integer         not null, primary key
+#  login               :string(30)      not null
+#  kind                :string(20)      not null
+#  email               :string(100)
+#  name                :string(100)
+#  state               :string(255)     default("passive"), not null
+#  crypted_password    :string(255)     not null
+#  password_salt       :string(255)     not null
+#  persistence_token   :string(255)
+#  single_access_token :string(255)
+#  perishable_token    :string(255)
+#  current_login_ip    :string(255)
+#  last_login_ip       :string(255)
+#  time_zone           :string(50)      not null
+#  locale              :string(50)      not null
+#  last_login_at       :datetime
+#  last_request_at     :datetime
+#  current_login_at    :datetime
+#  login_count         :integer
+#  rating              :integer
+#  wins                :integer
+#  loses               :integer
+#  fics_rating         :integer
+#  fics_login          :string(255)
+#  fics_password       :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+

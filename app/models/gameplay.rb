@@ -12,3 +12,18 @@ class Gameplay < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+# Schema version: 20090525081807
+#
+# Table name: gameplays
+#
+#  id         :integer         not null, primary key
+#  user_id    :integer         not null
+#  match_id   :integer         not null
+#  black      :boolean
+#  move_queue :string(20)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

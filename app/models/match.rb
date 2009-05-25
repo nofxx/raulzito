@@ -6,7 +6,8 @@ class Match < ActiveRecord::Base
                                       :check_for_checkmate,
                                       :play_queued_moves]
 
-  belongs_to :winning_player, :class_name => 'User', :foreign_key => 'winning_player'
+  belongs_to :winner, :class_name => 'User'
+  belongs_to :loser, :class_name => 'User'
 
   named_scope :active,    :conditions => { :active => true }
   named_scope :completed, :conditions => { :active => false }
@@ -97,14 +98,14 @@ class Match < ActiveRecord::Base
 
   def resign( plyr )
     self.result, self.active = ['Resigned', 0]
-    self.winning_player = (plyr == player1) ? player2 : player1
+    self.winner = (plyr == player1) ? player2 : player1
     save!
   end
 
   def checkmate_by( side )
     self.reload
     self.result, self.active = ['Checkmate', 0]
-    self.winning_player = (side == :white ? player1 : player2 )
+    self.winner = (side == :white ? player1 : player2 )
     save!
   end
 
@@ -155,3 +156,20 @@ class Match < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+# Schema version: 20090525081807
+#
+# Table name: matches
+#
+#  id         :integer         not null, primary key
+#  winner_id  :integer
+#  loser_id   :integer
+#  name       :string(255)
+#  active     :boolean
+#  start_pos  :string(100)
+#  result     :string(10)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

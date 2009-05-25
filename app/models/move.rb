@@ -106,3 +106,23 @@ private
   end
   
 end
+
+# == Schema Information
+# Schema version: 20090525081807
+#
+# Table name: moves
+#
+#  id                   :integer         not null, primary key
+#  match_id             :integer
+#  order                :integer
+#  from_coord           :string(10)
+#  to_coord             :string(10)
+#  string               :string(10)
+#  notation             :string(10)
+#  castled              :integer
+#  captured_piece_coord :string(10)
+#  promotion_choice     :string(1)
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+

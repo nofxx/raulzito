@@ -17,8 +17,8 @@ Hi. Welcome, <%= current_user.name %>.
         <li>
                 <%= link_to m.name, match_url(m) %>
                 (<%=  m.result %>
-<% if m.winning_player %>
-<%= ", Winner: #{m.winning_player == current_user ? 'You' : m.winning_player.name}" %>
+<% if m.winner %>
+<%= ", Winner: #{m.winner == current_user ? 'You' : m.winner.name}" %>
 <% end %>
                 )
 
