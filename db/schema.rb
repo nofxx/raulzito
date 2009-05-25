@@ -9,18 +9,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 99) do
+ActiveRecord::Schema.define(:version => 20090525081807) do
 
   create_table "chats", :force => true do |t|
+    t.integer  "user_id",    :null => false
     t.integer  "match_id",   :null => false
-    t.integer  "player_id",  :null => false
     t.string   "text"
+    t.datetime "sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chats", ["match_id"], :name => "index_chats_on_match_id"
+  add_index "chats", ["sent_at"], :name => "index_chats_on_sent_at"
+  add_index "chats", ["user_id"], :name => "index_chats_on_user_id"
+
+  create_table "friends", :force => true do |t|
+    t.string   "kind"
+    t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "gameplays", :force => true do |t|
-    t.integer  "player_id",                                   :null => false
+    t.integer  "user_id",                                     :null => false
     t.integer  "match_id",                                    :null => false
     t.boolean  "black",                    :default => false
     t.string   "move_queue", :limit => 20
@@ -28,20 +40,29 @@ ActiveRecord::Schema.define(:version => 99) do
     t.datetime "updated_at"
   end
 
+  add_index "gameplays", ["user_id", "match_id"], :name => "index_gameplays_on_user_id_and_match_id"
+  add_index "gameplays", ["user_id"], :name => "index_gameplays_on_user_id"
+
   create_table "matches", :force => true do |t|
-    t.integer  "active",                        :default => 1
-    t.string   "start_pos",      :limit => 100
-    t.string   "result",         :limit => 10
-    t.integer  "winning_player"
-    t.string   "name",           :limit => 100
+    t.integer  "winner_id"
+    t.integer  "loser_id"
+    t.string   "name"
+    t.boolean  "active"
+    t.string   "start_pos",  :limit => 100
+    t.string   "result",     :limit => 10
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "matches", ["active"], :name => "index_matches_on_active"
+  add_index "matches", ["winner_id"], :name => "index_matches_on_winner_id"
+
   create_table "moves", :force => true do |t|
     t.integer  "match_id"
+    t.integer  "order"
     t.string   "from_coord",           :limit => 10
     t.string   "to_coord",             :limit => 10
+    t.string   "string",               :limit => 10
     t.string   "notation",             :limit => 10
     t.integer  "castled"
     t.string   "captured_piece_coord", :limit => 10
@@ -49,6 +70,8 @@ ActiveRecord::Schema.define(:version => 99) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "moves", ["match_id"], :name => "index_moves_on_match_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -79,6 +102,12 @@ ActiveRecord::Schema.define(:version => 99) do
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.integer  "login_count"
+    t.integer  "rating"
+    t.integer  "wins"
+    t.integer  "loses"
+    t.integer  "fics_rating"
+    t.string   "fics_login"
+    t.string   "fics_password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,6 +118,7 @@ ActiveRecord::Schema.define(:version => 99) do
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+  add_index "users", ["rating"], :name => "index_users_on_rating"
   add_index "users", ["single_access_token"], :name => "index_users_on_single_access_token"
 
 end

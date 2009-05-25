@@ -3,6 +3,7 @@ class CreateChats < ActiveRecord::Migration
     create_table :chats do |t|
       t.references :user, :match, :null => false
       t.string :text
+      t.timestamp :sent_at
 
       t.timestamps
     end

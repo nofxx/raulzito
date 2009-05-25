@@ -48,9 +48,9 @@ class MatchController < ApplicationController
     return unless request.post?
     attrs = {}
     if params[:opponent_side] == 'black'
-      attrs = {:white => current_user, :black => Player.find( params[:opponent_id] )}
+      attrs = {:white => current_user, :black => User.find( params[:opponent_id] )}
     else
-      attrs = {:black => current_user, :white => Player.find( params[:opponent_id] )}
+      attrs = {:black => current_user, :white => User.find( params[:opponent_id] )}
     end
     setup = params[:start_pos]
 

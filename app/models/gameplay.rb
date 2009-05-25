@@ -1,6 +1,6 @@
 # The participation of a player in a given match
 class Gameplay < ActiveRecord::Base
-  belongs_to :player
+  belongs_to :user
   belongs_to :match
 
   def move_queue

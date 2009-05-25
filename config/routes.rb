@@ -35,6 +35,7 @@ ActionController::Routing::Routes.draw do |map|
 
   #sets controller courtesy of Sean
   map.resource :set, :member => {:change => :post}
+  # map.resources :boards
 
   map.resource :user_session
   map.logout   '/logout',   :controller => 'user_sessions', :action => 'destroy'

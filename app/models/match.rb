@@ -1,12 +1,12 @@
 class Match < ActiveRecord::Base
-  
-  has_many :players, :through    => :gameplays
+
+  has_many :users, :through    => :gameplays
   has_many :moves,   :before_add => :refer_to_match_instance,
                      :after_add  => [:save_board,
-                                      :check_for_checkmate, 
+                                      :check_for_checkmate,
                                       :play_queued_moves]
 
-  belongs_to :winning_player, :class_name => 'Player', :foreign_key => 'winning_player'
+  belongs_to :winning_player, :class_name => 'User', :foreign_key => 'winning_player'
 
   named_scope :active,    :conditions => { :active => true }
   named_scope :completed, :conditions => { :active => false }
@@ -17,7 +17,7 @@ class Match < ActiveRecord::Base
     def black; self[1]; end
   end
 
-  
+
   # the boards this match has known
   def boards
     @boards ||= boards_upto_current_move
@@ -33,16 +33,16 @@ class Match < ActiveRecord::Base
     black = opts.delete(:black) if opts[:black]
     super
     save!
-    gameplays << Gameplay.new(:player_id => white.id) if white
-    gameplays << Gameplay.new(:player_id => black.id, :black => true) if black
+    gameplays << Gameplay.new(:user_id => white.id) if white
+    gameplays << Gameplay.new(:user_id => black.id, :black => true) if black
   end
 
   def player1
-    @player1 ||= gameplays.white.player
+    @player1 ||= gameplays.white.user
   end
 
   def player2
-    @player2 ||= gameplays.black.player
+    @player2 ||= gameplays.black.user
   end
 
   def name
@@ -64,13 +64,13 @@ class Match < ActiveRecord::Base
     me, other_guy =  last_move.side == :black ? [:black, :white] : [:white, :black]
     #checkmate_by( me ) if board.in_checkmate?( other_guy )
   end
-    
+
   # for purposes of move validation it's handy to have access to such a variable
   def current_player
-    next_to_move == :black ? gameplays.black.player : gameplays.white.player
+    next_to_move == :black ? gameplays.black.user : gameplays.white.user
   end
-  
-  def turn_of?( plyr )	
+
+  def turn_of?( plyr )
     #return true #HACK
     self.next_to_move == side_of(plyr)
   end
@@ -86,7 +86,7 @@ class Match < ActiveRecord::Base
     moves.count.even? ? first_to_move : opp(first_to_move)
   end
 
-  def side_of( plyr ) 
+  def side_of( plyr )
     return :white if plyr == player1
     return :black if plyr == player2
   end
@@ -124,10 +124,10 @@ class Match < ActiveRecord::Base
     return unless queue.length > 1
 
     expected, response = queue.shift(2)
-    
+
     if expected != m.notation
       logger.debug "Pruning move queue due to incorrect prediction"
-      opponent.update_attribute(:move_queue, nil) and return 
+      opponent.update_attribute(:move_queue, nil) and return
     end
 
     logger.debug "Making queued move #{response}"
@@ -140,7 +140,7 @@ class Match < ActiveRecord::Base
 
     # call it back
     play_queued_moves(response_move)
-    
+
   end
 
   private

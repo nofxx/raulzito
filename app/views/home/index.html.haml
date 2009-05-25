@@ -1,5 +1,20 @@
-- content_for :head do
-  = javascript_include_tag 'app/tabs', 'jquery/ui.core', 'jquery/ui.tabs'
+//- content_for :head do
+//  = javascript_include_tag 'app/tabs', 'jquery/ui.core', 'jquery/ui.tabs'
+
+- if current_user
+  Hi. Welcome, <%= current_user.name %>.
+
+  %h3 Active Matches
+
+  %ul
+    - current_user.matches.active.each do |m|
+      %li= link_to m.name, match_url(m)
+      %li=  '(Your move)' if m.turn_of?( current_user )
+
+
+  = link_to "New Match", new_match_url
+- else
+  Login!
 
 .block
   - if current_user
@@ -22,3 +37,4 @@
           %p{:class => :first}
             = "Olá, #{current_user.name}."
             = link_to pluralize(@messages, "mensagem", "mensagens"), "/inbox", :class => "icon imail"
+

@@ -1,10 +1,10 @@
 <h1><%= "#{match.name}" %></h1>
 
-<script src="<%= url_for( :action => 'boards', :format => 'js' ) %>"></script>
+<script src="/boards.js"></script>
 <script>
    // this url will be polled for updates, and when a move has been made, this url
    // will be replaced by the new url to poll for updates
-   // TODO its clear this will only allow one match to be tracked per DOM 
+   // TODO its clear this will only allow one match to be tracked per DOM
    //  if its ever to be the case that one DOM manages several matches, some scoping will be needed
    var next_move_url = '<%= url_for( :action => :status, :move => match.moves.length + 1 ) %>';
 </script>
@@ -16,8 +16,8 @@
   this_updater = new PeriodicalExecuter(
     function(){
       new Ajax.Request(
-        next_move_url, 
-        {asynchronous:true, evalScripts:true, method:'get'} 
+        next_move_url,
+        {asynchronous:true, evalScripts:true, method:'get'}
       )
     }, 10
   )
@@ -27,7 +27,7 @@
 </div>
 
 <span id="move_indicator_parent">
-<%= render :partial => "move_indicator" %> 
+<%= render :partial => "move_indicator" %>
 </span>
 
 
@@ -36,12 +36,12 @@
 <%= render :partial => "board" %>
 </div>
 
-<div id="peripheral_to_board" style="margin: 0 0 0 20px; padding: 8px">  
+<div id="peripheral_to_board" style="margin: 0 0 0 20px; padding: 8px">
 
   <div id="move_list" class="move_list">
     <%= render :partial => 'move_list' %>
   </div>
-  
+
   <% if match.side_of(current_player) %>
   <div id="chat_container" style="float:left;">
     <%= periodically_call_remote( :url => match_chat_url(match), :method => :get, :frequency => 7, :update => 'chat') %>
@@ -72,13 +72,13 @@
 
 <div class="instructions">
   Instructions: Ideally you move by drag and drop. It's not the smoothest, but should work.
-  Alternately you can enter the from and to coordinates (d2 d4) in the boxes and then Submit Move. 
+  Alternately you can enter the from and to coordinates (d2 d4) in the boxes and then Submit Move.
   You can also enter the Algebraic Notation if you're showing off ( Nbxc4 ). To castle drag king
-  to its castling square. The move is submitted when you drop the piece or hit enter. 
+  to its castling square. The move is submitted when you drop the piece or hit enter.
   Takebacks are not enabled. Have fun !
 </div>
 
-<!-- 
+<!--
 <div id="select_set_div" style=" ">
   <%= render :partial => "sets/select_set" %>
 </div>
