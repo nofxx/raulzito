@@ -1,17 +1,19 @@
 class CreateMatches < ActiveRecord::Migration
   def self.up
     create_table :matches do |t|
-      
-      t.column :active, :int, :default => 1
+      t.references :winner, :loser
+      t.string :name
+      t.boolean :active
 
       #an initial coordinate set in fen notation, if not the start of game
-      t.column :start_pos, :string, :limit => 100
-      t.column :result, :string, :limit => 10
-      t.column :winning_player, :int
-      t.column :name, :string, :limit => 100
+      t.string :start_pos, :limit => 100
+      t.string :result, :limit => 10
 
       t.timestamps
     end
+
+    add_index :matches, :winner_id
+    add_index :matches, :active
   end
 
   def self.down

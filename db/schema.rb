@@ -9,19 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090424042453) do
+ActiveRecord::Schema.define(:version => 99) do
 
   create_table "chats", :force => true do |t|
     t.integer  "match_id",   :null => false
     t.integer  "player_id",  :null => false
     t.string   "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "fbusers", :force => true do |t|
-    t.integer  "facebook_user_id", :null => false
-    t.integer  "playing_as"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -57,12 +50,6 @@ ActiveRecord::Schema.define(:version => 20090424042453) do
     t.datetime "updated_at"
   end
 
-  create_table "players", :force => true do |t|
-    t.string "name", :limit => 20
-  end
-
-  add_index "players", ["name"], :name => "index_players_on_name", :unique => true
-
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -74,12 +61,34 @@ ActiveRecord::Schema.define(:version => 20090424042453) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "users", :force => true do |t|
-    t.string   "email",           :limit => 50
-    t.integer  "playing_as"
-    t.string   "security_phrase", :limit => 200
-    t.string   "auth_token",      :limit => 200
+    t.string   "login",               :limit => 30,                         :null => false
+    t.string   "kind",                :limit => 20,                         :null => false
+    t.string   "email",               :limit => 100
+    t.string   "name",                :limit => 100
+    t.string   "state",                              :default => "passive", :null => false
+    t.string   "crypted_password",                                          :null => false
+    t.string   "password_salt",                                             :null => false
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.string   "time_zone",           :limit => 50,                         :null => false
+    t.string   "locale",              :limit => 50,                         :null => false
+    t.datetime "last_login_at"
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.integer  "login_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["kind"], :name => "index_users_on_kind"
+  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+  add_index "users", ["single_access_token"], :name => "index_users_on_single_access_token"
 
 end

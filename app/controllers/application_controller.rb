@@ -1,66 +1,51 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
- helper :all # include all helpers, all the time
-
-  helper_attr :current_fbuser  #attr_accessor and helper_method
-  attr_accessor :current_player
-  helper_method :current_player
-
-  #only use layout if not a facebook request - todo - standardize the 'is_facebook' test
-  # layout proc{ |c| c.params[:fb_sig] ? false : 'application' }
-
-  # descendant controllers call authorize to ensure player is logged in, or redirect them to login
-  def authorize
-    self.current_player ||= player_in_session || player_in_facebook || player_in_cookie || player_over_http
-
-    unless self.current_player
-      flash[:notice] = "Login is required in order to take this action."
-      session[:original_uri] = request.request_uri
-      redirect_to is_facebook? ? register_url : login_url
-    end
-  end
-
+   helper_method :current_user_session, :current_user
+  filter_parameter_logging :password, :password_confirmation
+  # layout proc{ |c| c.request.xhr? ? false : "application" }
+  before_filter :set_time_zone
+  before_filter :set_locale
 
   private
 
-  # if this request is coming from facebook- its been seen while testing match_controller_fb_spec
-  # that sometimes facebook_session is nil in test mode. We'll extend the definition for now to
-  # also allow for hacked-on fb_sig_user as well
-  def is_facebook?
-    false #!! ( facebook_session || params[:fb_sig_user] )
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
   end
 
-  # an already logged in player
-  def player_in_session
-    return nil unless session[:player_id]
-    Player.find(session[:player_id])
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
   end
 
-  # if accessed over facebook, the player referenced
-  def player_in_facebook
-    fb_id = params[:fb_sig_user]
-    return unless fb_id
-    fbuser = Fbuser.find_by_facebook_user_id(fb_id)
-    return fbuser.playing_as if fbuser
-  end
-
-  # authenticates from a stored md5 hash in a cookie
-  def player_in_cookie
-    return nil unless cookies[:auth_tokenx]
-    User.find_by_auth_token( cookies[:auth_tokenx] ).playing_as
-  end
-
-  # provides basic auth for Curl/Wget functionality
-  def player_over_http
-    authenticate_with_http_basic do |username, password|
-      User.find_by_email_and_security_phrase(username, password).playing_as
+  def require_user
+    unless current_user
+      store_location
+      flash[:notice] = "You must be logged in to access this page"
+      redirect_to "/login" #new_user_session_url
+      return false
     end
   end
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  def store_location
+    session[:return_to] = request.request_uri
+  end
+
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
+
+  def set_locale
+    locale = current_user.locale if current_user
+    I18n.locale = locale || params[:locale] || 'pt'
+    I18n.load_path += Dir[ File.join(RAILS_ROOT, 'lib', 'locale', '*.{rb,yml}') ]
+  end
+
+  def set_time_zone
+    Time.zone = current_user.time_zone if current_user
+  end
+
+
 end

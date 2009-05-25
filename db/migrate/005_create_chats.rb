@@ -1,13 +1,15 @@
 class CreateChats < ActiveRecord::Migration
   def self.up
     create_table :chats do |t|
-      t.integer :match_id, :null => false
-      t.integer :player_id, :null => false
+      t.references :user, :match, :null => false
       t.string :text
-      t.datetime :created_at
 
       t.timestamps
     end
+
+    add_index :chats, :user_id
+    add_index :chats, :match_id
+    add_index :chats, :sent_at
   end
 
   def self.down

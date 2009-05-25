@@ -1,15 +1,29 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :friends
 
-  # The priority is based upon order of creation: first created -> highest priority.
+  map.root :controller => 'home', :action => 'index'
+
+  map.resources :messages
+  map.inbox '/inbox', :controller => 'messages', :action => 'index'
+  map.inbox_new '/inbox/new/:id', :controller => 'messages', :action => 'new'
+
+  map.resources :admin, :only => [:index, :update]
+  map.resources :backup, :only => [:index, :new, :show, :destroy, :create, :restore]
+  map.resource  :config, :controller => "config"
+  map.resource  :about, :controller => "about"
+  map.resource  :help, :controller => "help"
+  map.resource  :opt, :controller => "opt"
+
+
 
   # Default routes - facebook or not
-  map.facebook_root '', :controller => "match", :conditions => {:canvas => true}
-  map.root :controller => "authentication", :conditions => {:canvas => false}
+  #map.facebook_root '', :controller => "match", :conditions => {:canvas => true}
+  #map.root :controller => "authentication", :conditions => {:canvas => false}
 
-  map.auth       'authentication/:action',  :controller => 'authentication'
-  map.login      'authentication/login',    :controller => 'authentication', :action => 'login'
-  map.logout     'authentication/logout',   :controller => 'authentication', :action => 'logout'
-  map.register   'authentication/register', :controller => 'authentication', :action => 'register'
+  #map.auth       'authentication/:action',  :controller => 'authentication'
+  #map.login      'authentication/login',    :controller => 'authentication', :action => 'login'
+  #map.logout     'authentication/logout',   :controller => 'authentication', :action => 'logout'
+  #map.register   'authentication/register', :controller => 'authentication', :action => 'register'
 
   #allow moving from CURL - Although GET generally not acceptable, post won't work without the forgery protection
   map.create_move 'match/:match_id/moves/:notation', :controller => 'move', :action => 'create', :defaults => { :notation => nil }
@@ -22,8 +36,12 @@ ActionController::Routing::Routes.draw do |map|
   #sets controller courtesy of Sean
   map.resource :set, :member => {:change => :post}
 
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:id/:action'
-  map.connect ':controller/:id/:action.:format'  
-  
+  map.resource :user_session
+  map.logout   '/logout',   :controller => 'user_sessions', :action => 'destroy'
+  map.login    '/login',    :controller => 'user_sessions', :action => 'new'
+  map.register '/register', :controller => 'users', :action => 'create'
+  map.signup   '/signup',   :controller => 'users', :action => 'new'
+  map.resource :account, :controller => "users"
+  map.resources :accounts
+  map.resources :users
 end

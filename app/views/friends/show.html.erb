@@ -1,0 +1,13 @@
+<p>
+  <b>Kind:</b>
+  <%=h @friend.kind %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%=h @friend.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_friend_path(@friend) %> |
+<%= link_to 'Back', friends_path %>
