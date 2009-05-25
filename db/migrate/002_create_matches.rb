@@ -3,6 +3,7 @@ class CreateMatches < ActiveRecord::Migration
     create_table :matches do |t|
       t.references :winner, :loser
       t.string :name
+      t.string :state
       t.boolean :active#, :null => false, :default => true
 
       #an initial coordinate set in fen notation, if not the start of game

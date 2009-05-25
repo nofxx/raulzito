@@ -17,7 +17,7 @@ class MatchController < ApplicationController
   # GET /match/
   def index
     # shows active matches
-    @matches = current_user.matches.active
+    @matches = current_player.matches.active
   end
 
   # match/:id/status?move=N returns javascript to update the board to move N.
@@ -39,7 +39,7 @@ class MatchController < ApplicationController
 
   def resign
     @match = Match.find( params[:id] )
-    @match.resign( current_user )
+    @match.resign( current_player0 )
     redirect_to :action => 'index'
   end
 
@@ -48,9 +48,9 @@ class MatchController < ApplicationController
     return unless request.post?
     attrs = {}
     if params[:opponent_side] == 'black'
-      attrs = {:white => current_user, :black => User.find( params[:opponent_id] )}
+      attrs = {:white => current_player, :black => Player.find( params[:opponent_id] )}
     else
-      attrs = {:black => current_user, :white => User.find( params[:opponent_id] )}
+      attrs = {:black => current_player, :white => Player.find( params[:opponent_id] )}
     end
     setup = params[:start_pos]
 

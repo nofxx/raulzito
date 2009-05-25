@@ -5,11 +5,11 @@ module MatchHelper
   end
 
   def viewed_from_side
-    @viewed_from_side ||= (current_user == match.player1) ? :white : :black
+    @viewed_from_side ||= (current_player == match.player1) ? :white : :black
   end
 
   def your_turn
-    @your_turn ||= match.turn_of?( current_user )
+    @your_turn ||= match.turn_of?( current_player )
   end
 
   def last_move

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :current_player
   filter_parameter_logging :password, :password_confirmation
   # layout proc{ |c| c.request.xhr? ? false : "application" }
   before_filter :set_time_zone
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
+  end
+
+  def current_player
+    @current_user
   end
 
   def require_user

@@ -1,13 +1,13 @@
 class Match < ActiveRecord::Base
 
-  has_many :users,   :through    => :gameplays
+  has_many :players, :through    => :gameplays
   has_many :moves,   :before_add => :refer_to_match_instance,
                      :after_add  => [:save_board,
                                       :check_for_checkmate,
                                       :play_queued_moves]
 
-  belongs_to :winner, :class_name => 'User'
-  belongs_to :loser, :class_name => 'User'
+  belongs_to :winner, :class_name => 'Player'
+  belongs_to :loser, :class_name => 'Player'
 
   named_scope :active,    :conditions => { :active => true }
   named_scope :completed, :conditions => { :active => false }
@@ -35,16 +35,16 @@ class Match < ActiveRecord::Base
     black = opts.delete(:black) if opts[:black]
     super
     save!
-    gameplays << Gameplay.new(:user_id => white.id) if white
-    gameplays << Gameplay.new(:user_id => black.id, :black => true) if black
+    gameplays << Gameplay.new(:player_id => white.id) if white
+    gameplays << Gameplay.new(:player_id => black.id, :black => true) if black
   end
 
   def player1
-    @player1 ||= gameplays.white.user
+    @player1 ||= gameplays.white.player
   end
 
   def player2
-    @player2 ||= gameplays.black.user
+    @player2 ||= gameplays.black.player
   end
 
   def name
@@ -69,7 +69,7 @@ class Match < ActiveRecord::Base
 
   # for purposes of move validation it's handy to have access to such a variable
   def current_player
-    next_to_move == :black ? gameplays.black.user : gameplays.white.user
+    next_to_move == :black ? gameplays.black.player : gameplays.white.player
   end
 
   def turn_of?( plyr )

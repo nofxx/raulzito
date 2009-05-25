@@ -20,6 +20,14 @@ class User < ActiveRecord::Base
    # c.login_field_validates_uniqueness_of_options = { :allow_blank => false }
   end
 
+  # creates a user and the corresponding player, passing a hash of options to each
+  def self.create_with_player( user_opts, player_opts )
+    u = User.create( user_opts )
+    p = Player.create( player_opts )
+    u.playing_as = p
+    u.save!
+    u
+  end
 end
 
 # == Schema Information
