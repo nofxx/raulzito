@@ -1,6 +1,6 @@
 class Match < ActiveRecord::Base
 
-  has_many :users, :through    => :gameplays
+  has_many :users,   :through    => :gameplays
   has_many :moves,   :before_add => :refer_to_match_instance,
                      :after_add  => [:save_board,
                                       :check_for_checkmate,

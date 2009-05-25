@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
     t.datetime "updated_at"
   end
 
-  add_index "gameplays", ["user_id", "match_id"], :name => "index_gameplays_on_user_id_and_match_id"
+  add_index "gameplays", ["match_id", "user_id"], :name => "index_gameplays_on_user_id_and_match_id"
   add_index "gameplays", ["user_id"], :name => "index_gameplays_on_user_id"
 
   create_table "matches", :force => true do |t|
