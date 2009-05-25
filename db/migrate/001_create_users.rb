@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.integer :playing_as#, :null => false
+      t.references :player #integer :playing_as#, :null => false
       t.string :login,            :limit =>  30,   :null => false
       t.string :kind,             :limit =>  20,   :null => false
       t.string :email, :name,     :limit => 100

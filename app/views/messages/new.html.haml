@@ -1,0 +1,13 @@
+.block
+  .content
+    %h2 Enviar Mensagem
+    .inner
+      - semantic_form_for(@message, :html => {:class => "form" }) do |f|
+        = f.error_messages
+        = f.input :to_id, :as => :string
+        = f.input :subject
+        = f.input :body
+        .navform
+          = f.submit "Enviar", :class => :button
+          ou
+          = link_to 'Cancelar', "/inbox"

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  belongs_to :playing_as, :class_name => "Player", :foreign_key => "playing_as"
+  belongs_to :player
   has_many  :gameplays
   has_many  :matches, :through => :gameplays
   has_many  :friendships
@@ -20,13 +20,18 @@ class User < ActiveRecord::Base
    # c.login_field_validates_uniqueness_of_options = { :allow_blank => false }
   end
 
+  def playing_as
+    player
+  end
+
+  def before_validation
+    self.time_zone ||= "Brasilia"
+    self.locale ||= "pt"
+  end
+
   # creates a user and the corresponding player, passing a hash of options to each
-  def self.create_with_player( user_opts, player_opts )
-    u = User.create( user_opts )
-    p = Player.create( player_opts )
-    u.playing_as = p
-    u.save!
-    u
+  def before_create #self.create_with_player( user_opts, player_opts )
+    self.create_player(:name => login)
   end
 end
 

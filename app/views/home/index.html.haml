@@ -9,7 +9,7 @@
     = link "Novo jogo", new_match_url, :class => "icon iplus"
 
   - sidebar "Active Matches" do
-    - current_user.matches.active.each do |m|
+    - current_player.matches.active.each do |m|
       = link m.name, match_url(m)
       =  '(Your move)' if m.turn_of?( current_user )
 - else

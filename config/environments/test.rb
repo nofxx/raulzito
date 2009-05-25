@@ -24,4 +24,4 @@ config.action_mailer.delivery_method = :test
 # require 'ruby-debug'
 # require 'ruby-prof'
 config.gem "rspec", :lib => false
-config.gem "nofxx-object_daddy", :lib => false
+config.gem "nofxx-object_daddy", :lib => "object_daddy"

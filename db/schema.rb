@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090525081807) do
+ActiveRecord::Schema.define(:version => 99) do
 
   create_table "chats", :force => true do |t|
-    t.integer  "user_id",    :null => false
+    t.integer  "player_id",  :null => false
     t.integer  "match_id",   :null => false
     t.string   "text"
     t.datetime "sent_at"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
   end
 
   add_index "chats", ["match_id"], :name => "index_chats_on_match_id"
+  add_index "chats", ["player_id"], :name => "index_chats_on_player_id"
   add_index "chats", ["sent_at"], :name => "index_chats_on_sent_at"
-  add_index "chats", ["user_id"], :name => "index_chats_on_user_id"
 
   create_table "friends", :force => true do |t|
     t.string   "kind"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
   end
 
   create_table "gameplays", :force => true do |t|
-    t.integer  "user_id",                                     :null => false
+    t.integer  "player_id",                                   :null => false
     t.integer  "match_id",                                    :null => false
     t.boolean  "black",                    :default => false
     t.string   "move_queue", :limit => 20
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
     t.datetime "updated_at"
   end
 
-  add_index "gameplays", ["match_id", "user_id"], :name => "index_gameplays_on_user_id_and_match_id"
-  add_index "gameplays", ["user_id"], :name => "index_gameplays_on_user_id"
+  add_index "gameplays", ["match_id", "player_id"], :name => "index_gameplays_on_player_id_and_match_id"
+  add_index "gameplays", ["player_id"], :name => "index_gameplays_on_player_id"
 
   create_table "geometry_columns", :id => false, :force => true do |t|
     t.string  "f_table_catalog",   :limit => 256, :null => false
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
     t.integer  "winner_id"
     t.integer  "loser_id"
     t.string   "name"
+    t.string   "state"
     t.boolean  "active"
     t.string   "start_pos",  :limit => 100
     t.string   "result",     :limit => 10
@@ -83,6 +84,17 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
 
   add_index "moves", ["match_id"], :name => "index_moves_on_match_id"
 
+  create_table "players", :force => true do |t|
+    t.string  "name",        :limit => 20
+    t.integer "rating"
+    t.integer "wins"
+    t.integer "loses"
+    t.integer "fics_rating"
+  end
+
+  add_index "players", ["name"], :name => "index_players_on_name", :unique => true
+  add_index "players", ["rating"], :name => "index_players_on_rating"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -102,11 +114,16 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
   end
 
   create_table "users", :force => true do |t|
+    t.integer  "player_id"
     t.string   "login",               :limit => 30,                         :null => false
     t.string   "kind",                :limit => 20,                         :null => false
     t.string   "email",               :limit => 100
     t.string   "name",                :limit => 100
     t.string   "state",                              :default => "passive", :null => false
+    t.string   "fics_login",          :limit => 50
+    t.string   "fics_password",       :limit => 50
+    t.string   "time_zone",           :limit => 50,                         :null => false
+    t.string   "locale",              :limit => 50,                         :null => false
     t.string   "crypted_password",                                          :null => false
     t.string   "password_salt",                                             :null => false
     t.string   "persistence_token"
@@ -114,18 +131,10 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
     t.string   "perishable_token"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
-    t.string   "time_zone",           :limit => 50,                         :null => false
-    t.string   "locale",              :limit => 50,                         :null => false
     t.datetime "last_login_at"
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.integer  "login_count"
-    t.integer  "rating"
-    t.integer  "wins"
-    t.integer  "loses"
-    t.integer  "fics_rating"
-    t.string   "fics_login"
-    t.string   "fics_password"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -136,7 +145,6 @@ ActiveRecord::Schema.define(:version => 20090525081807) do
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
-  add_index "users", ["rating"], :name => "index_users_on_rating"
   add_index "users", ["single_access_token"], :name => "index_users_on_single_access_token"
 
 end

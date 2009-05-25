@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_player
-    @current_user
+    @current_user.player
   end
 
   def require_user

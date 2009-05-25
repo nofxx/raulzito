@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-class MatchControllerTest < ActionController::TestCase
+describe MatchController do
 
   # TODO this will change if viewing a read-only match
   def test_redirected_to_login_if_requesting_active_match
@@ -11,7 +11,7 @@ class MatchControllerTest < ActionController::TestCase
   def test_redirected_to_match_listing_page_when_resigning_match
   get :resign, { :format => 'html', :id => 2}, {:player_id => 1}
   assert_response 302
-  end 
+  end
 
   def test_white_view_of_board_when_requested_by_white
     get :show, { :id => matches(:paul_vs_dean).id }, {:player_id => players(:paul).id }
@@ -19,7 +19,7 @@ class MatchControllerTest < ActionController::TestCase
     assert_equal :white, assigns['viewed_from_side']
 
   #assert 8 is first in the list so when board rendered down page, 1 is at the bottom
-    assert_equal '8', assigns['ranks'][0].chr 
+    assert_equal '8', assigns['ranks'][0].chr
   end
 
   def test_black_view_of_board_when_requested_by_black
@@ -28,7 +28,7 @@ class MatchControllerTest < ActionController::TestCase
     assert_response 200
     assert_equal :black, assigns['viewed_from_side']
 
-    assert_equal '1', assigns['ranks'][0].chr 
+    assert_equal '1', assigns['ranks'][0].chr
   end
 
   def test_requesting_ended_match_yields_result_template
@@ -52,7 +52,7 @@ class MatchControllerTest < ActionController::TestCase
   def test_gets_match_status
     get :status, { :id => matches(:paul_vs_dean).id}, {:player_id => players(:paul).id }
     assert_response 200
-  end 
+  end
 
   def test_gets_list_of_active_matches
     get :index, nil, {:player_id => players(:paul).id }
