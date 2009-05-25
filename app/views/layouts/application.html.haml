@@ -4,9 +4,9 @@
   %head
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }/
     %title= "Raulzito - { #{controller.controller_name.capitalize} }"
-    = stylesheet_link_tag 'application', 'icons', 'theme/style', 'theme/ui.theme', :media => 'screen, projection'
+    = stylesheet_link_tag 'application', 'icons', "chess",  'theme/style', 'theme/ui.theme', :media => 'screen, projection'
     //= stylesheet_link_tag 'compiled/print.css', :media => 'print'
-    = javascript_include_tag 'jquery' , 'application', 'board_action'
+    = javascript_include_tag 'jquery.js' , 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js', 'jchess-0.1.0', 'application'
     = content_for :head
   %body
     #container
