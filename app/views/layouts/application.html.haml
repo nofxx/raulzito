@@ -4,8 +4,12 @@
   %head
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }/
     %title= "Raulzito - { #{controller.controller_name.capitalize} }"
-    = stylesheet_link_tag 'application', 'icons', 'theme/style', 'theme/ui.theme', :media => 'screen, projection'
-    //= stylesheet_link_tag 'compiled/print.css', :media => 'print'
+    = stylesheet_link_tag 'application', 'icons', 'theme/style'
+    = stylesheet_link_tag 'screen', 'typography', :media => 'screen, projection'
+    //= stylesheet_link_tag 'print.css', :media => 'print'
+    /[if IE]
+      = stylesheet_link_tag 'ie', :media => 'screen, projection'
+
     = javascript_include_tag 'jquery' , 'application', 'board_action'
     = content_for :head
   %body

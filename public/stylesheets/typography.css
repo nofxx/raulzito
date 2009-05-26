@@ -1,0 +1,166 @@
+/* line 163, ../../app/stylesheets/typography.sass */
+.body {
+  line-height: 1.5;
+  font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+  color: #222222;
+  font-size: 75%; }
+  /* line 59, ../../app/stylesheets/typography.sass */
+  .body h1 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 8em;
+    line-height: 1;
+    margin-bottom: 0.5em; }
+    /* line 64, ../../app/stylesheets/typography.sass */
+    .body h1 img {
+      margin: 0; }
+  /* line 66, ../../app/stylesheets/typography.sass */
+  .body h2 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 2em;
+    margin-bottom: 0.75em; }
+  /* line 70, ../../app/stylesheets/typography.sass */
+  .body h3 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1.5em;
+    line-height: 1;
+    margin-bottom: 1em; }
+  /* line 75, ../../app/stylesheets/typography.sass */
+  .body h4 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-bottom: 1.25em; }
+  /* line 80, ../../app/stylesheets/typography.sass */
+  .body h5 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1.5em; }
+  /* line 85, ../../app/stylesheets/typography.sass */
+  .body h6 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1em;
+    font-weight: bold; }
+  /* line 89, ../../app/stylesheets/typography.sass */
+  .body h2 img, .body h3 img, .body h4 img, .body h5 img, .body h6 img {
+    margin: 0; }
+  /* line 91, ../../app/stylesheets/typography.sass */
+  .body p {
+    margin: 0 0 1.5em; }
+    /* line 93, ../../app/stylesheets/typography.sass */
+    .body p img.left {
+      margin: 1.5em 1.5em 1.5em 0;
+      padding: 0; }
+    /* line 97, ../../app/stylesheets/typography.sass */
+    .body p img.right {
+      margin: 1.5em 0 1.5em 1.5em;
+      padding: 0; }
+  /* line 101, ../../app/stylesheets/typography.sass */
+  .body a {
+    text-decoration: underline;
+    color: #2d0000; }
+    /* line 44, ../../app/stylesheets/typography.sass */
+    .body a:visited {
+      color: #2d0000; }
+    /* line 47, ../../app/stylesheets/typography.sass */
+    .body a:focus {
+      color: #2d0000; }
+    /* line 50, ../../app/stylesheets/typography.sass */
+    .body a:hover {
+      color: #2d0000; }
+    /* line 53, ../../app/stylesheets/typography.sass */
+    .body a:active {
+      color: #2d0000; }
+  /* line 104, ../../app/stylesheets/typography.sass */
+  .body blockquote {
+    margin: 1.5em;
+    color: #666;
+    font-style: italic; }
+  /* line 108, ../../app/stylesheets/typography.sass */
+  .body strong {
+    font-weight: bold; }
+  /* line 110, ../../app/stylesheets/typography.sass */
+  .body em {
+    font-style: italic; }
+  /* line 112, ../../app/stylesheets/typography.sass */
+  .body dfn {
+    font-style: italic;
+    font-weight: bold; }
+  /* line 115, ../../app/stylesheets/typography.sass */
+  .body sup, .body sub {
+    line-height: 0; }
+  /* line 117, ../../app/stylesheets/typography.sass */
+  .body abbr, .body acronym {
+    border-bottom: 1px dotted #666; }
+  /* line 119, ../../app/stylesheets/typography.sass */
+  .body address {
+    margin: 0 0 1.5em;
+    font-style: italic; }
+  /* line 122, ../../app/stylesheets/typography.sass */
+  .body del {
+    color: #666; }
+  /* line 124, ../../app/stylesheets/typography.sass */
+  .body pre {
+    margin: 1.5em 0;
+    white-space: pre; }
+  /* line 127, ../../app/stylesheets/typography.sass */
+  .body pre, .body code, .body tt {
+    font: 1em 'andale mono', 'lucida console', monospace;
+    line-height: 1.5; }
+  /* line 129, ../../app/stylesheets/typography.sass */
+  .body li ul, .body li ol {
+    margin: 0 1.5em; }
+  /* line 131, ../../app/stylesheets/typography.sass */
+  .body ul {
+    margin: 0 1.5em 1.5em 1.5em;
+    list-style-type: disc; }
+  /* line 134, ../../app/stylesheets/typography.sass */
+  .body ol {
+    margin: 0 1.5em 1.5em 1.5em;
+    list-style-type: decimal; }
+  /* line 137, ../../app/stylesheets/typography.sass */
+  .body dl {
+    margin: 0 0 1.5em 0; }
+    /* line 139, ../../app/stylesheets/typography.sass */
+    .body dl dt {
+      font-weight: bold; }
+  /* line 141, ../../app/stylesheets/typography.sass */
+  .body dd {
+    margin-left: 1.5em; }
+  /* line 143, ../../app/stylesheets/typography.sass */
+  .body table {
+    margin-bottom: 1.4em;
+    width: 100%; }
+  /* line 146, ../../app/stylesheets/typography.sass */
+  .body th {
+    font-weight: bold; }
+  /* line 148, ../../app/stylesheets/typography.sass */
+  .body thead th {
+    background: #cccccc; }
+  /* line 150, ../../app/stylesheets/typography.sass */
+  .body th, .body td, .body caption {
+    padding: 4px 10px 4px 5px; }
+  /* line 152, ../../app/stylesheets/typography.sass */
+  .body tr.even td {
+    background: #cccccc; }
+  /* line 154, ../../app/stylesheets/typography.sass */
+  .body tfoot {
+    font-style: italic; }
+  /* line 156, ../../app/stylesheets/typography.sass */
+  .body caption {
+    background: #eee; }
+  /* line 158, ../../app/stylesheets/typography.sass */
+  .body .quiet {
+    color: #dddddd; }
+  /* line 160, ../../app/stylesheets/typography.sass */
+  .body .loud {
+    color: #eeeeee; }
+
+
+

@@ -2,9 +2,6 @@
  *  SIG@ Revolution Theme
  *
  */
-.small { font-size:11px; }
-.gray { color:#999999; }
-.hightlight { background-color:#FFFFCC; }
 
 a:link, a:visited, a:hover, a:active, h1, h2, h3 { color: #7A1818; }
 h3 a { text-decoration:none }
@@ -22,7 +19,7 @@ hr {
 }
 
 #header {
-  background: #7A1818;
+  background: #2D0000;
 
 }
 
