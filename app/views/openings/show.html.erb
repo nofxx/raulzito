@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @opening.name %>
+</p>
+
+<p>
+  <b>Move queue:</b>
+  <%=h @opening.move_queue %>
+</p>
+
+
+<%= link_to 'Edit', edit_opening_path(@opening) %> |
+<%= link_to 'Back', openings_path %>

@@ -1,20 +1,25 @@
-class MatchController < ApplicationController
-  include MatchHelper
+class MatchesController < ApplicationController
+#  include MatchHelper
   before_filter :require_user
+
 
  #  before_filter :authorize
 
-  # GET /match/1
+  # GET /matches/1
   def show
+    @match = Match.find( params[:id] )
+    @match ||= Match.find_by_name( params[:id] )
+    @match ||= Match.new # params[:match]?
+
     respond_to do |format|
-      format.fbml # should be same as html
-      format.html { render :template => 'match/result' and return if match.active == 0 }
-      format.text { render :text => match.board.to_s(viewed_from_side==:black) }
-      format.pgn  { render :partial => 'match/move_list' }
+      # format.fbml # should be same as html
+      format.html { render :template => 'matches/result' } # }and return if @match.active == 0 }
+      format.text { render :text => @match.board.to_s(viewed_from_side==:black) }
+      format.pgn  { render :partial => 'matches/move_list' }
     end
   end
 
-  # GET /match/
+  # GET /matches/
   def index
     # shows active matches
     @matches = current_player.matches.active
@@ -33,7 +38,7 @@ class MatchController < ApplicationController
 
   end
 
-  # GET /match/new
+  # GET /matches/new
   def new
   end
 
@@ -43,7 +48,7 @@ class MatchController < ApplicationController
     redirect_to :action => 'index'
   end
 
-  # POST /match/create
+  # POST /matches/create
   def create
     return unless request.post?
     attrs = {}
@@ -63,18 +68,9 @@ class MatchController < ApplicationController
       logger.warn "Error #{pgn.playback_errors.to_a.inspect} in PGN playback of #{setup}" if pgn.playback_errors
     end
 
-    redirect_to match_url(@match.id) if @match
+    redirect_to matches_url(@match.id) if @match
   end
 
-  private
-
-  def match
-    @match ||= if params[:id]
-      params[:id].to_i != 0 ? Match.find( params[:id] ) : Match.find_by_name( params[:id] )
-    else
-      Match.new # params[:match]?
-    end
-  end
-  helper_method :match #, :board, :your_turn, :files, :ranks, :last_move, :status_has_changed
+  # helper_method :match #, :board, :your_turn, :files, :ranks, :last_move, :status_has_changed
 
 end

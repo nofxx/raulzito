@@ -1,0 +1,24 @@
+<h1>Listing tutorials</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Move queue</th>
+    <th>Body</th>
+  </tr>
+
+<% @tutorials.each do |tutorial| %>
+  <tr>
+    <td><%=h tutorial.name %></td>
+    <td><%=h tutorial.move_queue %></td>
+    <td><%=h tutorial.body %></td>
+    <td><%= link_to 'Show', tutorial %></td>
+    <td><%= link_to 'Edit', edit_tutorial_path(tutorial) %></td>
+    <td><%= link_to 'Destroy', tutorial, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New tutorial', new_tutorial_path %>

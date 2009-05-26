@@ -1,9 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tutorials
+
+  map.resources :openings
+
+  map.resources :tournaments
+
   map.resources :friends
 
   map.root :controller => 'home', :action => 'index'
 
   map.resources :messages
+  map.resources :articles
   map.inbox '/inbox', :controller => 'messages', :action => 'index'
   map.inbox_new '/inbox/new/:id', :controller => 'messages', :action => 'new'
 
@@ -28,9 +35,11 @@ ActionController::Routing::Routes.draw do |map|
   #allow moving from CURL - Although GET generally not acceptable, post won't work without the forgery protection
   map.create_move 'match/:match_id/moves/:notation', :controller => 'move', :action => 'create', :defaults => { :notation => nil }
 
-  map.resources :match , :except => [:delete], :shallow => true, :collection => { :create => :post } do |match|
-    match.resources :moves, :controller => :move, :collection => { :create => :post }
-    match.resource :chat
+  map.resources :matches , :except => [:delete], :shallow => true,
+    :collection => { :create => :post },
+    :member => { :resign => :get } do |m|
+    m.resources :moves, :controller => :move, :collection => { :create => :post }
+    m.resource :chat
 #     match.resource :status
   end
 

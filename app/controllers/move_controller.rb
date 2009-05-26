@@ -37,7 +37,7 @@ protected
     redirect_to( match_path(@match) ) and return unless request.xhr?
 
     #otherwise do a normal status update to refresh UI
-    render :template => 'match/status' and return
+    render :template => 'matches/status' and return
   end
 
   def display_error(ex)
@@ -52,7 +52,7 @@ protected
     #  render :template => 'match/status' and return
     #end
 
-    redirect_to( match_url(@match.id) ) and return if @match
+    redirect_to( matches_url(@match.id) ) and return if @match
 
   end
 

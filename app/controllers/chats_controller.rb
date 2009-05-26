@@ -5,7 +5,7 @@ class ChatsController < ApplicationController
   def show
   end
 
-  # POST /match/N/chat
+  # POST /matches/N/chat
   def create
     chat = Chat.new(params[:chat])
     chat.text.gsub!( '<', '&lt;' ).gsub!( '>', '&gt;' ) rescue nil

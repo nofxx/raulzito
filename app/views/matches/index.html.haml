@@ -1,0 +1,20 @@
+//- content_for :head do
+//# <%= javascript_include_tag .....
+
+%h1 Your current duels
+
+%h3 Active Matches
+
+- current_player.matches.active.each do |m|
+  = link_to m.name, matches_url(m)
+  =  '(Your move)' if m.turn_of?( current_player )
+
+
+%h3 Completed Matches
+- current_player.matches.completed.each do |m|
+  = link_to m.name, matches_url(m)
+  =  m.result
+  - if m.winner
+    = ", Winner: #{m.winner == current_player ? 'You' : m.winner.name}"
+
+= link_to "New Match", new_match_path

@@ -1,10 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-
-describe Message do
-
-  it "should generate" do
-    Message.generate.should be_valid
-  end
+class Message < ActiveRecord::Base
+  generator_for :subject, "value for subject"
+  generator_for :body, "value for body"
+  generator_for :read, false
 
 end
 

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  move_queue: MyText
+  body: MyText
+
+two:
+  name: MyString
+  move_queue: MyText
+  body: MyText

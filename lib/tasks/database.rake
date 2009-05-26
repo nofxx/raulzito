@@ -117,8 +117,7 @@ namespace :db do
   task :bootstrap do
     require 'object_daddy'
     require 'faker'
-    [Publication, Article, Person, Group, Law, Area, Procurement, Poi,
-    User, Official, Sector, Zone, Property].each do |k|
+    [Match].each do |k|
       80.times {  k.generate! }
     end
   end

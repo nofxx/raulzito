@@ -9,8 +9,7 @@ describe MessagesController do
   describe "When Logged In" do
 
     before(:each) do
-      @login_warning= nil #{}"You need to be logged in to do that"
-      autho_login_as :admin
+      auth_login_as :admin
     end
 
     describe "responding to GET index" do

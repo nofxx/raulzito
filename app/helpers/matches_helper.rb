@@ -1,4 +1,4 @@
-module MatchHelper
+module MatchesHelper
 
   def board
     @board ||= match.board

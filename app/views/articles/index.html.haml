@@ -1,0 +1,20 @@
+.block
+  .content
+    %h2 Noticias
+    .inner
+      - for article in @articles
+        %ul{:class => "list"}
+          %h3= link_to article.title, article
+          %li
+            .left
+              Por:
+              =h article.user.name
+            .item
+              %p= article.body
+          .gray=l article.created_at
+      = will_paginate @articles
+      .clear
+
+- sidebar do
+  = link "Novo Artigo", new_article_path, :class => 'icon iadd'
+  = link "Anteriores", "/"

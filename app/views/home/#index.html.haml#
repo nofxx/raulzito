@@ -1,0 +1,27 @@
+//- content_for :head do
+//  = javascript_include_tag 'app/tabs', 'jquery/ui.core', 'jquery/ui.tabs'
+
+- if current_user
+  = "Olá, #{current_user.name}."
+  = link_to pluralize(@messages, "mensagem", "mensagens"), "/inbox", :class => "icon imail"
+
+  - sidebar do
+    = link "Novo jogo", new_matches_url, :class => "icon iplus"
+
+  - sidebar "Active Matches" do
+    - current_player.matches.active.each do |m|
+      = link m.name, matches_url(m)
+      =  '(Your move)' if m.turn_of?( current_user )
+- else
+  - sidebar "Login" do
+    .content= render :partial => "user_sessions/new"
+
+.block
+  - if current_user
+    %h2 Jogos Disponiveis
+    .inner
+      %ul
+        - Match.started.each do |m|
+          %li
+            = link m.name, matches_url(m)
+            =  '(Your move)' if m.turn_of?( current_user )

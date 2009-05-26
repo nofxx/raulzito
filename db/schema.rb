@@ -43,16 +43,6 @@ ActiveRecord::Schema.define(:version => 99) do
   add_index "gameplays", ["match_id", "player_id"], :name => "index_gameplays_on_player_id_and_match_id"
   add_index "gameplays", ["player_id"], :name => "index_gameplays_on_player_id"
 
-  create_table "geometry_columns", :id => false, :force => true do |t|
-    t.string  "f_table_catalog",   :limit => 256, :null => false
-    t.string  "f_table_schema",    :limit => 256, :null => false
-    t.string  "f_table_name",      :limit => 256, :null => false
-    t.string  "f_geometry_column", :limit => 256, :null => false
-    t.integer "coord_dimension",                  :null => false
-    t.integer "srid",                             :null => false
-    t.string  "type",              :limit => 30,  :null => false
-  end
-
   create_table "matches", :force => true do |t|
     t.integer  "winner_id"
     t.integer  "loser_id"
@@ -67,6 +57,22 @@ ActiveRecord::Schema.define(:version => 99) do
 
   add_index "matches", ["active"], :name => "index_matches_on_active"
   add_index "matches", ["winner_id"], :name => "index_matches_on_winner_id"
+
+  create_table "messages", :force => true do |t|
+    t.integer  "from_id",                       :null => false
+    t.integer  "to_id",                         :null => false
+    t.integer  "parent_id"
+    t.string   "subject",                       :null => false
+    t.text     "body",                          :null => false
+    t.boolean  "read",       :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["from_id"], :name => "index_messages_on_from_id"
+  add_index "messages", ["parent_id"], :name => "index_messages_on_parent_id"
+  add_index "messages", ["read"], :name => "index_messages_on_read"
+  add_index "messages", ["to_id"], :name => "index_messages_on_to_id"
 
   create_table "moves", :force => true do |t|
     t.integer  "match_id"
@@ -83,6 +89,16 @@ ActiveRecord::Schema.define(:version => 99) do
   end
 
   add_index "moves", ["match_id"], :name => "index_moves_on_match_id"
+
+  create_table "openings", :force => true do |t|
+    t.string   "name",       :null => false
+    t.text     "move_queue", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "openings", ["move_queue"], :name => "index_openings_on_move_queue", :unique => true
+  add_index "openings", ["name"], :name => "index_openings_on_name", :unique => true
 
   create_table "players", :force => true do |t|
     t.string  "name",        :limit => 20
@@ -105,13 +121,44 @@ ActiveRecord::Schema.define(:version => 99) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
-  create_table "spatial_ref_sys", :id => false, :force => true do |t|
-    t.integer "srid",                      :null => false
-    t.string  "auth_name", :limit => 256
-    t.integer "auth_srid"
-    t.string  "srtext",    :limit => 2048
-    t.string  "proj4text", :limit => 2048
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "tournament_id"
+    t.integer  "player_id"
+    t.integer  "rank"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "subscriptions", ["player_id", "tournament_id"], :name => "index_subscriptions_on_tournament_id_and_player_id"
+  add_index "subscriptions", ["player_id"], :name => "index_subscriptions_on_player_id"
+  add_index "subscriptions", ["rank"], :name => "index_subscriptions_on_rank"
+  add_index "subscriptions", ["tournament_id"], :name => "index_subscriptions_on_tournament_id"
+
+  create_table "tournaments", :force => true do |t|
+    t.integer  "winner_id"
+    t.string   "name",       :null => false
+    t.string   "kind"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tournaments", ["kind"], :name => "index_tournaments_on_kind"
+  add_index "tournaments", ["name"], :name => "index_tournaments_on_name"
+  add_index "tournaments", ["start_at"], :name => "index_tournaments_on_start_at"
+  add_index "tournaments", ["winner_id"], :name => "index_tournaments_on_winner_id"
+
+  create_table "tutorials", :force => true do |t|
+    t.string   "name"
+    t.text     "move_queue"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tutorials", ["created_at"], :name => "index_tutorials_on_created_at"
+  add_index "tutorials", ["name"], :name => "index_tutorials_on_name"
 
   create_table "users", :force => true do |t|
     t.integer  "player_id"
